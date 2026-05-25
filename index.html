@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="imgs/logo_grafico.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <title>Carmo Code | Portfólio</title>
+    <style>
+        /* AS TUAS CORES E TIPOGRAFIAS DO MOODBOARD */
+        :root {
+            --cor-fundo: #f8f9fa;
+            --cor-texto: #333333;
+            
+            --cor-azul-claro: #1ca3d6; 
+            --cor-azul-marinho: #0b1f51;
+            --cor-amarelo: #f7d002;
+            
+            --cor-cartao: #ffffff;
+            
+            --fonte-texto: 'Inter', sans-serif;
+            --fonte-codigo: 'Fira Code', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--fonte-texto);
+        }
+
+        body {
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--cor-azul-claro);
+        }
+
+        /* NAVEGAÇÃO */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: var(--cor-cartao);
+            box-shadow: 0 2px 10px rgba(11, 31, 81, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo img {
+            height: 40px;
+            display: block;
+        }
+
+        .nav-links a {
+            margin-left: 25px;
+            font-weight: 500;
+            color: var(--cor-azul-marinho);
+            font-family: var(--fonte-codigo);
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--cor-azul-claro);
+        }
+
+        /* SEÇÃO HERO (ZONA PRINCIPAL) */
+        .hero {
+            padding: 60px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        /* O teu logótipo completo em grande destaque */
+        .hero-logo {
+            max-height: 160px;
+            margin-bottom: 40px;
+            animation: flutuar 6s ease-in-out infinite; 
+        }
+
+        @keyframes flutuar {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* O Terminal */
+        .terminal {
+            width: 100%;
+            background-color: var(--cor-azul-marinho);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .terminal-header {
+            background-color: #08163b;
+            padding: 10px 15px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .dot.red { background-color: #ff5f56; }
+        .dot.yellow { background-color: #ffbd2e; }
+        .dot.green { background-color: #27c93f; }
+
+        .terminal-body {
+            padding: 30px;
+            color: #fff;
+            font-family: var(--fonte-codigo);
+            font-size: 16px;
+            min-height: 150px;
+        }
+
+        .terminal-body span.prompt {
+            color: var(--cor-amarelo);
+            margin-right: 10px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background-color: var(--cor-azul-claro);
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* A NOVA JANELA ARCADE PARA OS JOGOS */
+        .arcade-box {
+            display: none; /* Escondida até ativares os jogos */
+            width: 100%;
+            height: 300px;
+            background-color: #04102e;
+            border: 2px solid var(--cor-azul-claro);
+            border-radius: 8px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 0 15px rgba(28, 163, 214, 0.2);
+            background-image: linear-gradient(rgba(28, 163, 214, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(28, 163, 214, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .bug-inseto {
+            position: absolute;
+            font-size: 35px;
+            cursor: crosshair;
+            user-select: none;
+            transition: top 0.4s ease-out, left 0.4s ease-out;
+            z-index: 5;
+            filter: drop-shadow(0px 5px 5px rgba(0,0,0,0.5)); 
+        }
+
+        /* CAIXA DOS BOTÕES PRINCIPAIS */
+        .botoes-hero {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: var(--cor-azul-marinho);
+            color: white;
+            border-radius: 4px;
+            font-family: var(--fonte-codigo);
+            font-weight: 600;
+            transition: 0.3s;
+            border: 2px solid var(--cor-azul-marinho);
+            text-align: center;
+        }
+
+        .botoes-hero .btn {
+            flex: 1; /* Alinha os dois botões com larguras idênticas */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background-color: var(--cor-amarelo);
+            border-color: var(--cor-amarelo);
+            color: var(--cor-azul-marinho);
+            transform: translateY(-2px);
+        }
+
+        .btn-jogos {
+            background-color: var(--cor-azul-claro);
+            border-color: var(--cor-azul-claro);
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-jogos:hover {
+            background-color: #1588b6;
+            border-color: #1588b6;
+            color: white;
+        }
+
+        /* Links interativos do terminal */
+        .terminal-link {
+            color: var(--cor-amarelo);
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+
+        .terminal-link:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* SEÇÃO DE PROJETOS */
+        .projetos-section {
+            padding: 60px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .projetos-section h2 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 50px;
+            color: var(--cor-azul-marinho);
+            font-family: var(--fonte-codigo);
+        }
+
+        .grid-projetos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px; 
+        }
+
+        .cartao-projeto {
+            background-color: var(--cor-cartao);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-bottom: 4px solid var(--cor-azul-claro);
+        }
+
+        .cartao-projeto:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(11, 31, 81, 0.15);
+        }
+
+        .container-imagem-projeto {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            background-color: var(--cor-azul-marinho);
+        }
+
+        .container-imagem-projeto img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.9);
+            transition: transform 0.5s ease, filter 0.5s ease;
+        }
+
+        .overlay-github {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(11, 31, 81, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+
+        .overlay-github i {
+            color: var(--cor-amarelo);
+            font-size: 50px;
+        }
+
+        .cartao-projeto:hover .container-imagem-projeto img {
+            transform: scale(1.08);
+            filter: brightness(0.5);
+        }
+
+        .cartao-projeto:hover .overlay-github {
+            opacity: 1;
+        }
+
+        .conteudo-projeto {
+            padding: 25px;
+        }
+
+        .conteudo-projeto h3 {
+            margin-bottom: 10px;
+            font-size: 22px;
+            color: var(--cor-azul-marinho);
+        }
+
+        .conteudo-projeto p {
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .tags {
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: #f0f4f8;
+            color: var(--cor-azul-claro);
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-family: var(--fonte-codigo);
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        /* RODAPÉ */
+        footer {
+            text-align: center;
+            padding: 40px;
+            background-color: var(--cor-azul-marinho);
+            color: white;
+            margin-top: 50px;
+        }
+
+        footer h2 {
+            color: var(--cor-amarelo);
+            font-family: var(--fonte-codigo);
+        }
+
+        footer p {
+            color: #cbd5e1;
+            margin: 15px 0 25px 0;
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 768px) {
+            nav { flex-direction: column; padding: 15px; }
+            .nav-links { margin-top: 20px; }
+            .nav-links a { margin: 0 10px; }
+            .projetos-section { padding: 40px 20px; }
+            .terminal-body { font-size: 14px; }
+            .botoes-hero { flex-direction: column; }
+        }
+
+
+
+        /* ==========================================
+           ESTILOS DO JOGO: DEVELOPER RUN (TIPO DINO)
+           ========================================== */
+        #runner-char {
+            position: absolute;
+            bottom: 0px;
+            left: 50px;
+            font-size: 45px;
+            z-index: 10;
+        }
+        
+        .runner-jump {
+            animation: jumpAnim 0.6s linear;
+        }
+        
+        @keyframes jumpAnim {
+            0% { bottom: 0px; }
+            40% { bottom: 130px; }
+            50% { bottom: 140px; }
+            60% { bottom: 130px; }
+            100% { bottom: 0px; }
+        }
+        
+        .runner-obs-anim {
+            position: absolute;
+            bottom: 0px;
+            right: -50px;
+            font-size: 40px;
+            animation: obsAnim 1.5s infinite linear;
+        }
+        
+        @keyframes obsAnim {
+            0% { right: -50px; }
+            100% { right: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <a href="#">
+                <img src="imgs/logo_grafico.png" alt="Carmo Code Logo">
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="#sobre">&lt;Sobre/&gt;</a>
+            <a href="#projetos">&lt;Projetos/&gt;</a>
+            <a href="#contactos">&lt;Contactos/&gt;</a>
+        </div>
+    </nav>
+
+    <section class="hero" id="sobre">
+        
+        <img src="imgs/logo_completo.png" alt="Carmo Code Logo Completo" class="hero-logo">
+        
+        <div class="terminal">
+            <div class="terminal-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+            <div class="terminal-body">
+                <span class="prompt">C:\CarmoCode&gt;</span><span id="texto-digitado"></span><span class="cursor"></span>
+            </div>
+        </div>
+
+        <div id="janela-arcade" class="arcade-box"></div>
+
+        <div class="botoes-hero">
+            <a href="https://github.com/Tiagos121" class="btn" target="_blank">
+                <i class="fab fa-github"></i> O Meu GitHub
+            </a>
+            <button onclick="abrirMenuJogos()" class="btn btn-jogos">
+                <i class="fas fa-gamepad"></i> Mini-Jogos
+            </button>
+        </div>
+        
+    </section>
+
+    <section class="projetos-section" id="projetos">
+        <h2>[ Os Meus Projetos ]</h2>
+        
+        <div class="grid-projetos">
+            <div class="cartao-projeto">
+                <a href="https://github.com/Tiagos121/Miniprojeto_BDTSS.git" style="text-decoration: none;" target="_blank">
+                    <div class="container-imagem-projeto">
+                        <div class="overlay-github">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <img src="imgs/site_filmes_indianos.png" alt="Preview do Miniprojeto BDTSS">
+                    </div>
+                    <div class="conteudo-projeto">
+                        <h3>Miniprojeto BDTSS</h3>
+                        <p>Exercício individual com recurso à linguagem PHP e base de dados MySQL. Consiste num site de gerenciamento de filmes com diferentes funcionalidades.</p>
+                        <div class="tags">
+                            <span class="tag">PHP</span>
+                            <span class="tag">MySQL</span>
+                        </div>
+                        <div class="links-projeto" style="margin:auto; text-align:left;">
+                            <span style="color: var(--cor-azul-claro); font-family: var(--fonte-codigo); font-weight: bold; font-size: 14px;">Ver no GitHub ↗</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="cartao-projeto">
+                <a href="https://github.com/Tiagos121/Semaforo_de_Noticias.git" style="text-decoration: none;" target="_blank">
+                    <div class="container-imagem-projeto">
+                        <div class="overlay-github">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <img src="imgs/site_sn_noticias.png" alt="Preview do Semáforo de Notícias">
+                    </div>
+                    <div class="conteudo-projeto">
+                        <h3>Semáforo de Notícias</h3>
+                        <p>Projeto desenvolvido em REACT que cruza a informação de noticias portuguesas com inteligência artificial no objetivo de detectar o viés politico das mesmas.</p>
+                        <div class="tags">
+                            <span class="tag">React</span>
+                            <span class="tag">Firebase</span>
+                            <span class="tag">Vite</span>
+                        </div>
+                        <div class="links-projeto" style="margin:auto; text-align:left;">
+                            <span style="color: var(--cor-azul-claro); font-family: var(--fonte-codigo); font-weight: bold; font-size: 14px;">Ver no GitHub ↗</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="cartao-projeto">
+                <a href="https://github.com/Tiagos121/Lousa_HandMade.git" style="text-decoration: none;" target="_blank">
+                    <div class="container-imagem-projeto">
+                        <div class="overlay-github">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <img src="imgs/site_lousa_hand_made.png" alt="Preview do LousaHandMade">
+                    </div>
+                    <div class="conteudo-projeto">
+                        <h3>Lousã HandMade</h3>
+                        <p>Projeto desenvolvido em PHP e MySQL, dedicado à valorização do trabalho artesanal, promovendo a ligação entre criadores e apreciadores de arte feita à mão.</p>
+                        <div class="tags">
+                            <span class="tag">PHP</span>
+                            <span class="tag">MySQL</span>
+                        </div>
+                        <div class="links-projeto" style="margin:auto; text-align:left;">
+                            <span style="color: var(--cor-azul-claro); font-family: var(--fonte-codigo); font-weight: bold; font-size: 14px;">Ver no GitHub ↗</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contactos">
+        <h2>[ Vamos trabalhar juntos? ]</h2>
+        <p>Envia-me um email ou copia o endereço para a tua aplicação favorita.</p>
+        
+        <div style="display: flex; justify-content: center; gap: 15px; margin-top: 20px;">
+            <a href="mailto:tiago.carmoc10@gmail.com" class="btn" style="background-color: var(--cor-amarelo); color: var(--cor-azul-marinho); border: 2px solid var(--cor-amarelo);">
+                <i class="fas fa-envelope"></i> Enviar Email
+            </a>
+            <button id="btn-copiar" onclick="copiarEmail()" class="btn" style="background-color: transparent; color: white; border: 2px solid white; cursor: pointer;">
+                <i class="far fa-copy"></i> Copiar Email
+            </button>
+        </div>
+        <p style="margin-top: 40px; font-size: 14px; opacity: 0.6;">© 2026 Tiago Carmo. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // 1. VARIÁVEIS GERAIS
+        const textoApresentacao = "Olá, sou o Tiago.\nSou um Desenvolvedor Full-Stack apaixonado por criar soluções web,\ncom foco especial na união entre o código limpo e o design UX/UI.";
+        const alvoTerminal = document.getElementById("texto-digitado");
+        const caixaArcade = document.getElementById("janela-arcade");
+        
+        let contadorCaracteres = 0;
+        let timerEscrita;
+        let estadoTerminal = 'APRESENTACAO'; 
+        
+        // Timers dos Jogos
+        let timerPrincipalJogo;
+        let timerSecundarioJogo;
+
+        // 2. ESCUTA DO TECLADO (Agora suporta a Barra de Espaço para saltar)
+        document.addEventListener('keydown', (event) => {
+            const tecla = event.key.toLowerCase();
+            
+            if (estadoTerminal === 'MENU') {
+                if (tecla === '1') iniciarJogoRunner();
+                if (tecla === '2') iniciarJogoOverclock();
+                if (tecla === '3') iniciarJogoCache();
+                if (tecla === '0') voltarAoNormal();
+            } 
+            else if (estadoTerminal === 'JOGO') {
+                if (tecla === 'x') abrirMenuJogos();
+            }
+            else if (estadoTerminal === 'JOGO_RUNNER') {
+                if (tecla === 'x') abrirMenuJogos();
+                // O Space ou Seta para Cima faz o personagem saltar
+                if (event.code === 'Space' || event.code === 'ArrowUp') {
+                    event.preventDefault(); // Evita que a página faça scroll para baixo
+                    pularRunner();
+                }
+            }
+            else if (estadoTerminal === 'FIM') {
+                if (tecla === '0') abrirMenuJogos();
+            }
+        });
+
+        // 3. ANIMAÇÃO DE ESCRITA AUTOMÁTICA
+        function escreverTexto() {
+            if (contadorCaracteres < textoApresentacao.length) {
+                if(textoApresentacao.charAt(contadorCaracteres) === '\n') {
+                    alvoTerminal.innerHTML += "<br><span class='prompt'>C:\\CarmoCode&gt;</span>";
+                } else {
+                    alvoTerminal.innerHTML += textoApresentacao.charAt(contadorCaracteres);
+                }
+                contadorCaracteres++;
+                timerEscrita = setTimeout(escreverTexto, Math.random() * 40 + 20); 
+            }
+        }
+
+        // 4. LIMPAR TODOS OS JOGOS
+        function pararTodosOsJogos() {
+            clearInterval(timerPrincipalJogo);
+            clearTimeout(timerSecundarioJogo);
+            caixaArcade.innerHTML = "";
+            caixaArcade.style.display = "none";
+        }
+
+        // 5. RESET DO ESTADO PARA INTRODUÇÃO
+        function voltarAoNormal() {
+            estadoTerminal = 'APRESENTACAO';
+            clearTimeout(timerEscrita);
+            pararTodosOsJogos();
+            contadorCaracteres = 0;
+            alvoTerminal.innerHTML = "";
+            escreverTexto();
+        }
+
+        // 6. RENDERIZAÇÃO DO MENU DE JOGOS
+        function abrirMenuJogos() {
+            estadoTerminal = 'MENU';
+            clearTimeout(timerEscrita);     
+            pararTodosOsJogos();       
+            
+            alvoTerminal.innerHTML = `
+                A executar 'menu_jogos.exe'...<br><br>
+                <span class='prompt'>?</span> Seleciona um jogo (Usa o Rato ou Teclado):<br>
+                <br>
+                &nbsp;&nbsp;<a class="terminal-link" onclick="iniciarJogoRunner()">[1] Developer Run 👨‍💻</a><br>
+                &nbsp;&nbsp;<a class="terminal-link" onclick="iniciarJogoOverclock()">[2] Overclock ao CPU ⚡</a><br>
+                &nbsp;&nbsp;<a class="terminal-link" onclick="iniciarJogoCache()">[3] Limpar a Cache 🗑️</a><br>
+                <br>
+                &nbsp;&nbsp;<a class="terminal-link" onclick="voltarAoNormal()">[0] Voltar à Apresentação ↩️</a>
+            `;
+        }
+
+        // ==========================================
+        // JOGO 1: DEVELOPER RUN (Estilo Dino do Google)
+        // ==========================================
+        let scoreRunner = 0;
+        let isJumping = false;
+
+        function iniciarJogoRunner() {
+            estadoTerminal = 'JOGO_RUNNER';
+            scoreRunner = 0;
+            caixaArcade.style.display = "block";
+            
+            // Constrói o cenário
+            caixaArcade.innerHTML = `
+                <div style="position: relative; width: 100%; height: 100%; overflow: hidden; border-bottom: 2px solid var(--cor-azul-claro);">
+                    <div id="runner-char">👨‍💻</div>
+                    <div id="runner-obstacle" class="runner-obs-anim">🐛</div>
+                </div>
+            `;
+            
+            atualizarTerminalRunner();
+
+            // Clicar na Janela Arcade também conta como saltar
+            caixaArcade.onmousedown = function(e) {
+                e.preventDefault();
+                pularRunner();
+            };
+
+            // Loop de Jogo (Verifica colisões e aumenta pontos)
+            timerPrincipalJogo = setInterval(() => {
+                scoreRunner++;
+                atualizarTerminalRunner();
+                verificarColisao();
+            }, 100);
+        }
+
+        function pularRunner() {
+            const char = document.getElementById('runner-char');
+            if (!char || isJumping) return;
+            
+            isJumping = true;
+            char.classList.add('runner-jump');
+            
+            // Remove a classe de salto quando a animação CSS acaba
+            setTimeout(() => {
+                char.classList.remove('runner-jump');
+                isJumping = false;
+            }, 600);
+        }
+
+        function verificarColisao() {
+            const char = document.getElementById('runner-char');
+            const obs = document.getElementById('runner-obstacle');
+            if(!char || !obs) return;
+
+            // Obtém as posições exatas na tela
+            const charRect = char.getBoundingClientRect();
+            const obsRect = obs.getBoundingClientRect();
+
+            // Lógica de colisão
+            if (
+                charRect.right - 15 > obsRect.left &&
+                charRect.left + 15 < obsRect.right &&
+                charRect.bottom > obsRect.top + 10
+            ) {
+                // GAME OVER
+                clearInterval(timerPrincipalJogo);
+                fimDoJogo(`Foste apanhado por um Bug em produção! 💥<br><span class='prompt'>C:\\CarmoCode&gt;</span> Linhas de código (Score): ${scoreRunner}`, "iniciarJogoRunner()");
+            }
+        }
+
+        function atualizarTerminalRunner() {
+            alvoTerminal.innerHTML = `A executar 'Developer_Run.exe'...<br><span class='prompt'>C:\\CarmoCode&gt;</span> Pressiona [ESPAÇO] para saltar sobre os bugs de código!<br><br>Score: ${scoreRunner}<br><br><a class="terminal-link" onclick="abrirMenuJogos()">[x] Cancelar Jogo</a>`;
+        }
+
+        // ==========================================
+        // JOGO 2: OVERCLOCK AO CPU
+        // ==========================================
+        let cliquesCPU = 0;
+        let tempoOverclock = 10;
+
+        function iniciarJogoOverclock() {
+            estadoTerminal = 'JOGO';
+            cliquesCPU = 0;
+            tempoOverclock = 10;
+            caixaArcade.style.display = "block";
+            
+            caixaArcade.innerHTML = `
+                <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                    <div id="btn-cpu" style="font-size: 80px; cursor: pointer; user-select: none; transition: transform 0.05s;">⚡</div>
+                </div>
+            `;
+            
+            atualizarTerminalOverclock();
+
+            document.getElementById("btn-cpu").onmousedown = function() {
+                if(tempoOverclock <= 0) return;
+                cliquesCPU++;
+                this.style.transform = "scale(0.8)";
+                setTimeout(() => this.style.transform = "scale(1)", 50);
+                atualizarTerminalOverclock();
+            };
+
+            timerPrincipalJogo = setInterval(() => {
+                tempoOverclock--;
+                atualizarTerminalOverclock();
+                if (tempoOverclock <= 0) {
+                    clearInterval(timerPrincipalJogo);
+                    let mensagem = cliquesCPU > 40 ? "Velocidade impressionante! Código compilado." : "O servidor crashou, foste muito lento.";
+                    fimDoJogo(`Overclock concluído: ${cliquesCPU} cliques em 10s!<br><span class='prompt'>C:\\CarmoCode&gt;</span> ${mensagem}`, "iniciarJogoOverclock()");
+                }
+            }, 1000);
+        }
+
+        function atualizarTerminalOverclock() {
+            alvoTerminal.innerHTML = `A executar 'Overclock_CPU.exe'...<br><span class='prompt'>C:\\CarmoCode&gt;</span> Clica no raio o mais rápido possível!<br><br>Tempo: ${tempoOverclock}s | Cliques: ${cliquesCPU}<br><br><a class="terminal-link" onclick="abrirMenuJogos()">[x] Cancelar Jogo</a>`;
+        }
+
+        // ==========================================
+        // JOGO 3: LIMPAR A CACHE
+        // ==========================================
+        let lixosLimpos = 0;
+        let tempoCache = 15;
+
+        function iniciarJogoCache() {
+            estadoTerminal = 'JOGO';
+            lixosLimpos = 0;
+            tempoCache = 15;
+            caixaArcade.style.display = "block";
+            caixaArcade.innerHTML = ""; 
+            
+            atualizarTerminalCache();
+            gerarLixo();
+
+            timerPrincipalJogo = setInterval(() => {
+                tempoCache--;
+                atualizarTerminalCache();
+                if (tempoCache <= 0) {
+                    clearInterval(timerPrincipalJogo);
+                    clearTimeout(timerSecundarioJogo); 
+                    fimDoJogo(`Limpeza concluída! ${lixosLimpos} ficheiros apagados.<br><span class='prompt'>C:\\CarmoCode&gt;</span> A memória do servidor agradece.`, "iniciarJogoCache()");
+                }
+            }, 1000);
+        }
+
+        function atualizarTerminalCache() {
+            alvoTerminal.innerHTML = `A executar 'Clean_Cache.exe'...<br><span class='prompt'>C:\\CarmoCode&gt;</span> Apanha o lixo antes que desapareça!<br><br>Tempo: ${tempoCache}s | Limpos: ${lixosLimpos}<br><br><a class="terminal-link" onclick="abrirMenuJogos()">[x] Cancelar Jogo</a>`;
+        }
+
+        function gerarLixo() {
+            if (tempoCache <= 0) return;
+
+            const lixo = document.createElement('div');
+            lixo.className = 'bug-inseto'; 
+            lixo.innerHTML = '🗑️';
+            
+            const maxX = caixaArcade.offsetWidth - 50;
+            const maxY = caixaArcade.offsetHeight - 50;
+            lixo.style.left = Math.random() * maxX + 'px';
+            lixo.style.top = Math.random() * maxY + 'px';
+            caixaArcade.appendChild(lixo);
+
+            lixo.onmousedown = function() {
+                lixosLimpos++;
+                lixo.innerHTML = '✨';
+                clearTimeout(timerSecundarioJogo);
+                atualizarTerminalCache();
+                
+                setTimeout(() => {
+                    if (lixo.parentNode) lixo.remove();
+                    gerarLixo();
+                }, 200);
+            };
+
+            timerSecundarioJogo = setTimeout(() => {
+                if (lixo.parentNode) lixo.remove();
+                gerarLixo();
+            }, 800); 
+        }
+
+        // ==========================================
+        // ECRÃ DE FIM DE JOGO DINÂMICO
+        // ==========================================
+        function fimDoJogo(mensagemPrincipal, funcaoRestart) {
+            estadoTerminal = 'FIM';
+            pararTodosOsJogos();
+            
+            alvoTerminal.innerHTML = `
+                Processo Finalizado. 🏆<br>
+                <span class='prompt'>C:\\CarmoCode&gt;</span> ${mensagemPrincipal}<br><br>
+                &nbsp;&nbsp;<a class="terminal-link" onclick="${funcaoRestart}">> Tentar Novamente 🔄</a><br>
+                &nbsp;&nbsp;<a class="terminal-link" onclick="abrirMenuJogos()">[0] Voltar ao Menu 🔙</a>
+            `;
+        }
+
+        window.onload = function() {
+            setTimeout(escreverTexto, 500);
+        };
+        
+        function copiarEmail() {
+            const enderecoEmail = "tiago.carmoc10@gmail.com";
+            navigator.clipboard.writeText(enderecoEmail).then(() => {
+                const btnCopiar = document.getElementById("btn-copiar");
+                const txtOriginal = '<i class="far fa-copy"></i> Copiar Email';
+                btnCopiar.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+                btnCopiar.style.backgroundColor = "var(--cor-amarelo)";
+                btnCopiar.style.color = "var(--cor-azul-marinho)";
+                btnCopiar.style.borderColor = "var(--cor-amarelo)";
+                setTimeout(() => {
+                    btnCopiar.innerHTML = txtOriginal;
+                    btnCopiar.style.backgroundColor = "transparent";
+                    btnCopiar.style.color = "white";
+                    btnCopiar.style.borderColor = "white";
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
